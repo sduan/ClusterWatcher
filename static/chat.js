@@ -62,11 +62,12 @@ var updater = {
     },
 
     showMessage: function(message) {
-        var existing = $("#m" + message.id);
-        if (existing.length > 0) return;
-        var node = $(message.html);
+        //var existing = $("#m" + message.id);
+        //if (existing.length > 0) return;
+        var node = $(message.body);
         node.hide();
-        $("#inbox").append(node);
+        $("#inbox").html(message.body);
+		//$("#inbox").append(node);
         node.slideDown();
     }
 };
