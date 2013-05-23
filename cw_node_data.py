@@ -35,6 +35,7 @@ class NodeSystemData(NodeData):
 		data[Config.KEY_HOSTNAME] = socket.gethostname()
 		data[Config.KEY_SYS_NAME] = psi.arch.arch_type().sysname
 		data[Config.KEY_RELEASE] = psi.arch.arch_type().release
+		data[Config.KEY_CLUSTER_NAME] = self.cluster_name
 		# check if the data is dirty
 		if data_dict[self.name] != data:
 			data_dict[self.name] = data
@@ -42,6 +43,9 @@ class NodeSystemData(NodeData):
 
 	def set_node_endpoint(self, endpoint):
 		self.endpoint = endpoint
+
+	def set_cluster_name(self, cluster_name):
+		self.cluster_name = cluster_name
 
 class NodeProcsData(NodeData):
 	"""The class collects node's processes data.

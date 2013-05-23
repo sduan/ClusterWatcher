@@ -10,6 +10,7 @@ class Config(object):
 	GROUP_MASTER = "MASTER"
 	GROUP_NODE = "NODE"
 	GROUP_MONITORED_PROCS = "MONITORED_PROCS"
+	GROUP_CLUSTER = "CLUSTER"
 
 	# key name
 	KEY_MSG_ID = "msg_id"
@@ -20,6 +21,8 @@ class Config(object):
 	KEY_PID = "pid"
 	KEY_PPID = "ppid"
 	KEY_COMMAND = "command"
+	KEY_NAME = "name"
+	KEY_CLUSTER_NAME = "cluster_name"
 
 	def __init__(self):
 		pass
@@ -61,3 +64,6 @@ class NodeConfig(Config):
 
 	def GetMonitoredProcNames(self):
 		return self.data[self.GROUP_MONITORED_PROCS]
+
+	def GetClusterName(self):
+		return self.data[self.GROUP_CLUSTER][self.KEY_NAME]

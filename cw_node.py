@@ -23,9 +23,9 @@ node_data_dict = NodeDataDict()
 
 # add node's system info to node_data_dict
 node_system_data = NodeSystemData(Config.GROUP_NODE, True)
-node_system_data. set_node_endpoint(connection.GetLocalEndpoint())
+node_system_data.set_node_endpoint(connection.GetLocalEndpoint())
+node_system_data.set_cluster_name(config.GetClusterName())
 node_data_dict.add_item(node_system_data)
-
 
 # add node's proc info to node_data_dict
 node_procs_data = NodeProcsData(Config.GROUP_PROCESSES, False)

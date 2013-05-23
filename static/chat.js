@@ -46,6 +46,27 @@ jQuery.fn.formToDict = function() {
     return json;
 };
 
+function drawSidePanel(cluster_data)
+{
+    var node = [cluster_data.NODE];
+    $("#side_panel").html("");
+    $("#side_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
+};
+
+function drawMainPanel(cluster_data)
+{
+    var node = [cluster_data.NODE];
+    $("#main_panel").html("");
+    $("#main_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
+};
+
+function drawMainTable(cluster_data)
+{
+    // display received json data
+    drawSidePanel(cluster_data);
+    drawMainPanel(cluster_data);
+};
+
 var updater = {
     socket: null,
 
@@ -64,10 +85,24 @@ var updater = {
     showMessage: function(message) {
         //var existing = $("#m" + message.id);
         //if (existing.length > 0) return;
-        var node = $(message.body);
-        node.hide();
-        $("#inbox").html(message.body);
-		//$("#inbox").append(node);
-        node.slideDown();
+        //var node = $(message.body);
+        //node.hide();
+		// var obj = JSON.parse(message.body);
+		// console.log(obj)
+		// var tbl_body = "";
+		// $.each(obj.NODE, function() {
+		// 	var tbl_row = "";
+		// 	$.each(this, function(k , v) {
+		// 			tbl_row += "<td>"+v+"</td>";
+		// 	})
+		// 	tbl_body += "<tr>"+tbl_row+"</tr>";
+		// })
+
+        // $("#inbox").html(tbl_body);
+		// //$("#inbox").append(node);
+        //node.slideDown();
+
+        $("#cluster_txt").html(message.body);
+        drawMainTable(JSON.parse(message.body));
     }
 };

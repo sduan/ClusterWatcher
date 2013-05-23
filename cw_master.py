@@ -37,8 +37,7 @@ def OnRecvNodeInfo( msg ):
 	print "Received msg:" + str_msg
 	node_info_data[1] = str_msg
 	stream.send( "ok" )
-	#ChatSocketHandler.send_message( node_info_data[1] )
-	ChatSocketHandler.cache = str_msg
+	ChatSocketHandler.send_message( node_info_data[1] )
 
 
 
@@ -162,8 +161,10 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
         # ChatSocketHandler.send_updates(chat)
         #t = tornado.template.Template("<html>{{ myvalue }}</html>")
         #ChatSocketHandler.send_updates(t.generate(myvalue=str(message)))
-        message = ["ghi", "jkl"]
-        ChatSocketHandler.send_updates(message)
+        data = {}
+        data["body"] = message
+        logging.info("sending %r", data)
+        ChatSocketHandler.send_updates( data )
 	
 
 def main():
