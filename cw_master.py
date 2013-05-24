@@ -79,7 +79,7 @@ class Application(tornado.web.Application):
             cookie_secret="__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
-            xsrf_cookies=True,
+            xsrf_cookies=False,
         )
         tornado.web.Application.__init__(self, handlers, **settings)
 
@@ -94,7 +94,7 @@ class MainHandler(tornado.web.RequestHandler):
         # #test = "[{\"Id\":1,\"UserName\":\"Sam Smith\"},{\"Id\":2,\"UserName\":\"Fred Frankly\"},{\"Id\":1,\"UserName\":\"Zachary Zupers\"}]"
         # #self.render("JsonToHTML/index.html", myvalue=test, messages=["abc", "def"])
         test = '{"NODE":[{"release": "2.6.32-220.7.1.el6.x86_64", "sysname": "Linux", "endpoint": "tcp://172.20.136.20:49095", "hostname": "GXCore20"}]}'
-        self.render("index.html", myvalue=test, messages=["abc", "def"])
+        self.render("index.html", data=ChatSocketHandler.cache)
 
         # #self.render("JsonToHTML/index.html", myvalue=ChatSocketHandler.cache, messages=["abc", "def"])
         # #t = tornado.template.Template("<html>{{ myvalue }}</html>")
@@ -102,7 +102,7 @@ class MainHandler(tornado.web.RequestHandler):
 
 class ChatSocketHandler(tornado.websocket.WebSocketHandler):
     waiters = set()
-    cache = []
+    cache = ""
     cache_size = 200
 
     def allow_draft76(self):
@@ -161,10 +161,11 @@ class ChatSocketHandler(tornado.websocket.WebSocketHandler):
         # ChatSocketHandler.send_updates(chat)
         #t = tornado.template.Template("<html>{{ myvalue }}</html>")
         #ChatSocketHandler.send_updates(t.generate(myvalue=str(message)))
-        data = {}
-        data["body"] = message
-        logging.info("sending %r", data)
-        ChatSocketHandler.send_updates( data )
+        # data = {}
+        # data["body"] = message
+        # logging.info("sending %r", data)
+        ChatSocketHandler.cache = message
+        ChatSocketHandler.send_updates(message)
 	
 
 def main():

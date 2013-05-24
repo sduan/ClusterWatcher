@@ -62,6 +62,10 @@ function drawMainPanel(cluster_data)
 
 function drawMainTable(cluster_data)
 {
+    cluster_data = JSON.parse(cluster_data)
+    // show debug text
+    $("#cluster_txt").html(JSON.stringify(cluster_data));
+
     // display received json data
     drawSidePanel(cluster_data);
     drawMainPanel(cluster_data);
@@ -77,9 +81,11 @@ var updater = {
         } else {
             updater.socket = new MozWebSocket(url);
         }
-	updater.socket.onmessage = function(event) {
-	    updater.showMessage(JSON.parse(event.data));
-	}
+    updater.socket.onmessage = function(event) {
+        //alert("message received: " + event.data);
+        //updater.showMessage(event.data);
+        drawMainTable(event.data);
+    }
     },
 
     showMessage: function(message) {
@@ -102,7 +108,7 @@ var updater = {
 		// //$("#inbox").append(node);
         //node.slideDown();
 
-        $("#cluster_txt").html(message.body);
-        drawMainTable(JSON.parse(message.body));
+        $("#cluster_txt").html(JSON.stringify(message));
+        //drawMainTable(JSON.parse(message));
     }
 };
