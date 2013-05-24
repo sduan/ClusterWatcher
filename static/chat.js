@@ -48,16 +48,26 @@ jQuery.fn.formToDict = function() {
 
 function drawSidePanel(cluster_data)
 {
-    var node = [cluster_data.NODE];
     $("#side_panel").html("");
-    $("#side_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
+    $("#main_panel").html("");
+	for( var key in cluster_data )
+	{
+    	$("#side_panel").append( "<table><tr>" + key + "</tr></table>" );
+		//$("#main_panel").append(CreateTableView([cluster_data[key].NODE], "lightPro", true)).fadeIn();
+		var value = JSON.parse(cluster_data[key]);
+		//$("#main_panel").append( JSON.stringify(value.NODE) );
+		$("#main_panel").append(CreateTableView([value.NODE], "lightPro", true)).fadeIn();
+	}
+    //var node = [cluster_data.NODE];
+    //$("#side_panel").html("");
+    //$("#side_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
 };
 
 function drawMainPanel(cluster_data)
 {
-    var node = [cluster_data.NODE];
-    $("#main_panel").html("");
-    $("#main_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
+    //var node = [cluster_data.NODE];
+    //$("#main_panel").html("");
+    //$("#main_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
 };
 
 function drawMainTable(cluster_data)

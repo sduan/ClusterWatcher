@@ -12,8 +12,8 @@
       $(document).ready(function() {
         var str = "{{data}}";
 		str = str.replace(/&quot;/g,'"');
-        //alert ("test ready:" + str);
-        drawMainTable(str);
+        alert ("test ready:" + JSON.stringify(str));
+        drawMainTable(JSON.stringify(str));
       });
     </script>
   </head>

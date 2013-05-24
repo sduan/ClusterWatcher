@@ -21,10 +21,14 @@ ioloop.install()
 #import tornado
 #import tornado.web
 
+# local modules
+from cw_config import Config, MasterConfig
+
 node_info_data = {}
-node_info_data[1] = "test"
+#node_info_data[1] = "test"
 
 def OnRecvNodeInfo( msg ):
+	print "Message: " + str(msg)
 	# print "From:" + str( socket.gethostname() ) + ":" + str( msg )
 	# print str( s.gethostname() )
 	str_msg = str( msg );
@@ -35,9 +39,10 @@ def OnRecvNodeInfo( msg ):
 	print "Received msg id[" + str( json_data["msg_id"] ) + "]"
 	print "Json data: " + str( json_data )
 	print "Received msg:" + str_msg
-	node_info_data[1] = str_msg
+	key = json_data[Config.GROUP_NODE][Config.KEY_ENDPOINT]
+	node_info_data[key] = str_msg
 	stream.send( "ok" )
-	ChatSocketHandler.send_message( node_info_data[1] )
+	ChatSocketHandler.send_message(json.dumps(node_info_data))
 
 
 
@@ -94,7 +99,8 @@ class MainHandler(tornado.web.RequestHandler):
         # #test = "[{\"Id\":1,\"UserName\":\"Sam Smith\"},{\"Id\":2,\"UserName\":\"Fred Frankly\"},{\"Id\":1,\"UserName\":\"Zachary Zupers\"}]"
         # #self.render("JsonToHTML/index.html", myvalue=test, messages=["abc", "def"])
         test = '{"NODE":[{"release": "2.6.32-220.7.1.el6.x86_64", "sysname": "Linux", "endpoint": "tcp://172.20.136.20:49095", "hostname": "GXCore20"}]}'
-        self.render("index.html", data=ChatSocketHandler.cache)
+        mydata = json.dumps(node_info_data)
+        self.render("index.html", data=mydata)
 
         # #self.render("JsonToHTML/index.html", myvalue=ChatSocketHandler.cache, messages=["abc", "def"])
         # #t = tornado.template.Template("<html>{{ myvalue }}</html>")
