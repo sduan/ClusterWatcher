@@ -12,6 +12,9 @@
 // License for the specific language governing permissions and limitations
 // under the License.
 
+var GREEN_PIC = '<img alt="Success" class="icon32x32" src="/static/images/green.png" tooltip="connected">';
+var TD_GREEN_PIC = '<td width=10%>' + GREEN_PIC + '</td>';
+
 $(document).ready(function() {
     if (!window.console) window.console = {};
     if (!window.console.log) window.console.log = function() {};
@@ -48,16 +51,35 @@ jQuery.fn.formToDict = function() {
 
 function drawSidePanel(cluster_data)
 {
-    $("#side_panel").html("");
+    //$("#side_panel").html("");
     $("#main_panel").html("");
-	for( var key in cluster_data )
-	{
-    	$("#side_panel").append( "<table><tr>" + key + "</tr></table>" );
-		//$("#main_panel").append(CreateTableView([cluster_data[key].NODE], "lightPro", true)).fadeIn();
-		var value = JSON.parse(cluster_data[key]);
-		//$("#main_panel").append( JSON.stringify(value.NODE) );
-		$("#main_panel").append(CreateTableView([value.NODE], "lightPro", true)).fadeIn();
-	}
+    for( var key in cluster_data )
+    {
+        var cluster_name = cluster_data[key].NODE.cluster_name;
+        var node_name = cluster_data[key].NODE.hostname;
+        var cluster_table_name = "#" + cluster_name;
+        var node_id = cluster_name + "_" + key.replace(/\./g, '_');
+        var node_id_name = "#" + node_id;
+        if( $(cluster_table_name).length )
+        {
+            // cluster table already exist
+            if(!$(node_id_name).length)
+            {
+                $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td id=\"" + node_id + "\">" + node_name + "</td></tr>" );
+            }
+        }
+        else
+        {
+            // create cluster table
+            var text = "<table id=\"" + cluster_name + "\"><tr><td>" + cluster_name + "</td></tr></table>";
+            $("#side_panel").append( text );
+            $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td id=\"" + node_id + "\">" + node_name + "</td></tr>" );
+        }
+        //$("#main_panel").append(CreateTableView([cluster_data[key].NODE], "lightPro", true)).fadeIn();
+        var value = cluster_data[key];
+        //$("#main_panel").append( JSON.stringify(value.NODE) );
+        $("#main_panel").append(CreateTableView([value.NODE], "lightPro", true)).fadeIn();
+    }
     //var node = [cluster_data.NODE];
     //$("#side_panel").html("");
     //$("#side_panel").append(CreateTableView(node, "lightPro", true)).fadeIn();
@@ -74,7 +96,7 @@ function drawMainTable(cluster_data)
 {
     cluster_data = JSON.parse(cluster_data)
     // show debug text
-    $("#cluster_txt").html(JSON.stringify(cluster_data));
+    $("#cluster_txt").html("<code>" + JSON.stringify(cluster_data) + "</code>");
 
     // display received json data
     drawSidePanel(cluster_data);

@@ -40,7 +40,9 @@ def OnRecvNodeInfo( msg ):
 	print "Json data: " + str( json_data )
 	print "Received msg:" + str_msg
 	key = json_data[Config.GROUP_NODE][Config.KEY_ENDPOINT]
-	node_info_data[key] = str_msg
+	id = key[key.find('://')+3:key.rfind(':')]
+	print "id ==========[%s]" % id
+	node_info_data[id] = json_data
 	stream.send( "ok" )
 	ChatSocketHandler.send_message(json.dumps(node_info_data))
 
