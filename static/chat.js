@@ -13,7 +13,7 @@
 // under the License.
 
 var GREEN_PIC = '<img alt="Success" class="icon32x32" src="/static/images/green.png" tooltip="connected">';
-var TD_GREEN_PIC = '<td width=10%>' + GREEN_PIC + '</td>';
+var TD_GREEN_PIC = '<td width="25">' + GREEN_PIC + '</td>';
 
 $(document).ready(function() {
     if (!window.console) window.console = {};
@@ -71,7 +71,7 @@ function drawSidePanel(cluster_data)
         else
         {
             // create cluster table
-            var text = "<table id=\"" + cluster_name + "\"><tr><td>" + cluster_name + "</td></tr></table>";
+            var text = "<table id=\"" + cluster_name + "\"><tr><td colspan=\"2\">" + cluster_name + "</td></tr></table>";
             $("#side_panel").append( text );
             $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td id=\"" + node_id + "\">" + node_name + "</td></tr>" );
         }
