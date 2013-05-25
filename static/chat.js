@@ -96,7 +96,7 @@ function drawMainTable(cluster_data)
 {
     cluster_data = JSON.parse(cluster_data)
     // show debug text
-    $("#cluster_txt").html("<code>" + JSON.stringify(cluster_data) + "</code>");
+    $("#cluster_txt").html("<pre><code>" + FormatJSON(cluster_data) + "</code></pre>");
 
     // display received json data
     drawSidePanel(cluster_data);
