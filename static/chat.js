@@ -13,7 +13,7 @@
 // under the License.
 
 var GREEN_PIC = '<img alt="Success" class="icon32x32" src="/static/images/green.png" tooltip="connected">';
-var TD_GREEN_PIC = '<td width="25">' + GREEN_PIC + '</td>';
+var TD_GREEN_PIC = '<td align=\"center\">' + GREEN_PIC + '</td>';
 
 $(document).ready(function() {
     if (!window.console) window.console = {};
@@ -71,9 +71,11 @@ function drawSidePanel(cluster_data)
         else
         {
             // create cluster table
-            var text = "<table id=\"" + cluster_name + "\"><tr><td colspan=\"2\">" + cluster_name + "</td></tr></table>";
+            var text = "<table id=\"" + cluster_name + "\">" +
+                       "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align=\"center\">" + cluster_name + "</td></tr>" +
+					   "<tr><td align=\"center\">status</td><td align=\"center\">node hostname</td></tr></table>";
             $("#side_panel").append( text );
-            $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td id=\"" + node_id + "\">" + node_name + "</td></tr>" );
+            $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td align=\"center\" id=\"" + node_id + "\">" + node_name + "</td></tr>" );
         }
         //$("#main_panel").append(CreateTableView([cluster_data[key].NODE], "lightPro", true)).fadeIn();
         var value = cluster_data[key];
