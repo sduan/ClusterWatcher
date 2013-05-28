@@ -81,6 +81,11 @@ function drawSidePanel(cluster_data)
         var value = cluster_data[key];
         //$("#main_panel").append( JSON.stringify(value.NODE) );
         $("#main_panel").append(CreateTableView([value.NODE], "lightPro", true)).fadeIn();
+
+		for( var proc in value.PROCESSES )
+		{
+        	$("#main_panel").append(CreateTableView([value.PROCESSES[proc]], "lightPro", true)).fadeIn();
+		}
     }
     //var node = [cluster_data.NODE];
     //$("#side_panel").html("");
