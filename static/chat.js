@@ -14,6 +14,10 @@
 
 var GREEN_PIC = '<img alt="Success" class="icon32x32" src="/static/images/green.png" tooltip="connected">';
 var TD_GREEN_PIC = '<td align=\"center\">' + GREEN_PIC + '</td>';
+var SIDE_CLUSTER_PREFIX = "side_cluster_"
+var SIDE_NODE_PREFIX = "side_node_"
+var MAIN_CLUSTER_PREFIX = "main_cluster_"
+var MAIN_NODE_PREFIX = "main_node_"
 
 $(document).ready(function() {
     if (!window.console) window.console = {};
@@ -49,6 +53,20 @@ jQuery.fn.formToDict = function() {
     return json;
 };
 
+function getStringSideNodeRow( side_node_id, node_name )
+{
+	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_PIC + "<td align=\"center\">" + node_name + "</td></tr>";
+}
+
+function fillInNodeData(main_node_row, node_data)
+{
+    $(main_node_row).append(CreateTableView([node_data.NODE], "lightPro", true)).fadeIn();
+    for( var proc in node_data.PROCESSES )
+    {
+        $(main_node_row).append(CreateTableView([node_data.PROCESSES[proc]], "lightPro", true)).fadeIn();
+    }
+}
+
 function drawSidePanel(cluster_data)
 {
     //$("#side_panel").html("");
@@ -56,36 +74,57 @@ function drawSidePanel(cluster_data)
     for( var key in cluster_data )
     {
         var cluster_name = cluster_data[key].NODE.cluster_name;
+        var side_cluster_table_id = SIDE_CLUSTER_PREFIX + cluster_name;
+        var side_cluster_table = "#" + side_cluster_table_id;
+
         var node_name = cluster_data[key].NODE.hostname;
-        var cluster_table_name = "#" + cluster_name;
-        var node_id = cluster_name + "_" + key.replace(/\./g, '_');
-        var node_id_name = "#" + node_id;
-        if( $(cluster_table_name).length )
+        var side_node_id = SIDE_NODE_PREFIX + cluster_name + "_" + key.replace(/\./g, '_');
+        var side_node_row = "#" + side_node_id;
+        if( $(side_cluster_table).length )
         {
             // cluster table already exist
-            if(!$(node_id_name).length)
+            if(!$(side_node_row).length)
             {
-                $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td id=\"" + node_id + "\">" + node_name + "</td></tr>" );
+                $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name ) );
             }
         }
         else
         {
             // create cluster table
-            var text = "<table id=\"" + cluster_name + "\">" +
+            var text = "<hr><table id=\"" + side_cluster_table_id + "\">" +
                        "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align=\"center\">" + cluster_name + "</td></tr>" +
-					   "<tr><td align=\"center\">status</td><td align=\"center\">node hostname</td></tr></table>";
+                       "<tr><td align=\"center\">status</td><td align=\"center\">node name</td></tr></table>";
             $("#side_panel").append( text );
-            $(cluster_table_name).append( "<tr>" + TD_GREEN_PIC + "<td align=\"center\" id=\"" + node_id + "\">" + node_name + "</td></tr>" );
+            $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name ) );
         }
-        //$("#main_panel").append(CreateTableView([cluster_data[key].NODE], "lightPro", true)).fadeIn();
-        var value = cluster_data[key];
-        //$("#main_panel").append( JSON.stringify(value.NODE) );
-        $("#main_panel").append(CreateTableView([value.NODE], "lightPro", true)).fadeIn();
 
-		for( var proc in value.PROCESSES )
-		{
-        	$("#main_panel").append(CreateTableView([value.PROCESSES[proc]], "lightPro", true)).fadeIn();
-		}
+        // main panel
+        var main_cluster_table_id = MAIN_CLUSTER_PREFIX + cluster_name;
+        var main_cluster_table = "#" + main_cluster_table_id;
+
+        var main_node_id = MAIN_NODE_PREFIX + cluster_name + "_" + key.replace(/\./g, '_');
+        var main_node_row = "#" + main_node_id;
+        if( $(main_cluster_table).length )
+        {
+            // cluster table already exist
+            if($(main_node_row).length)
+            {
+                $(main_node_row).html("");
+            }
+            else
+            {
+                $("#main_panel").append( "<tr id=\"" + main_node_id + "\"></tr></table>" );
+            }
+            fillInNodeData(main_node_row, cluster_data[key]);
+        }
+        else
+        {
+            // create cluster table
+            var text = "<hr><table id=\"" + main_cluster_table_id + "\">" +
+                       "<tr id=\"" + main_node_id + "\"></tr></table>";
+            $("#main_panel").append( text );
+            fillInNodeData(main_node_row, cluster_data[key]);
+        }
     }
     //var node = [cluster_data.NODE];
     //$("#side_panel").html("");

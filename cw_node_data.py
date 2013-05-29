@@ -57,15 +57,12 @@ class NodeProcsData(NodeData):
 	def update(self, data_dict):
 		if not self.update_check(data_dict):
 			return
-		data = {}
+		data = []
 		process_table = psi.process.ProcessTable()
 		for process in process_table.values():
 			for proc_name in self.monitored_proc_names:
 				if proc_name in process.command:
-					data[process.pid] = {}
-					data[process.pid][Config.KEY_PID] = process.pid
-					data[process.pid][Config.KEY_PPID] = process.ppid
-					data[process.pid][Config.KEY_COMMAND] = process.command
+					data.append( { Config.KEY_PID : process.pid, Config.KEY_PPID : process.ppid, Config.KEY_COMMAND : process.command } )
 		if data_dict[self.name] != data:
 			data_dict[self.name] = data
 			NodeData.dirty = True
