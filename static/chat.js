@@ -60,11 +60,32 @@ function getStringSideNodeRow( side_node_id, node_name )
 
 function fillInNodeData(main_node_row, node_data)
 {
-    $(main_node_row).append(CreateTableView([node_data.NODE], "lightPro", true)).fadeIn();
-    for( var proc in node_data.PROCESSES )
+    var title_row = "<tr>";
+    var content_row = "<tr>";
+    for( var key in node_data.NODE )
     {
-        $(main_node_row).append(CreateTableView([node_data.PROCESSES[proc]], "lightPro", true)).fadeIn();
+        title_row += "<td>" + key + "</td>";
+		content_row += "<td>" + node_data.NODE[key] + "</td>";
     }
+    title_row += "</tr>";
+    content_row += "</tr>";
+    $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
+
+    //$(main_node_row).append(CreateTableView([node_data.NODE], "lightPro", true)).fadeIn();
+    title_row = "<tr><td>PID</td><td>PPID</td><td>Command</td></tr>";
+    content_row = "";
+    for( var i in node_data.PROCESSES )
+    {
+        content_row += "<tr>"
+        for( var key in node_data.PROCESSES[i])
+        {
+            content_row += "<td>" + node_data.PROCESSES[i][key] + "</td>";
+        }
+        content_row += "</tr>"
+        //main_node_row).append(CreateTableView([node_data.PROCESSES[proc]], "lightPro", true)).fadeIn();
+    }
+    $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
+    $(main_node_row).append(CreateTableView(node_data.PROCESSES, "lightPro", true)).fadeIn();
 }
 
 function drawSidePanel(cluster_data)
@@ -120,7 +141,7 @@ function drawSidePanel(cluster_data)
         else
         {
             // create cluster table
-            var text = "<hr><table id=\"" + main_cluster_table_id + "\">" +
+            var text = "<hr><table width=\"100%\" id=\"" + main_cluster_table_id + "\">" +
                        "<tr id=\"" + main_node_id + "\"></tr></table>";
             $("#main_panel").append( text );
             fillInNodeData(main_node_row, cluster_data[key]);

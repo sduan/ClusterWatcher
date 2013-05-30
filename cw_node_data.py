@@ -31,11 +31,11 @@ class NodeSystemData(NodeData):
 		if not self.update_check(data_dict):
 			return
 		data = {}
-		data[Config.KEY_ENDPOINT] = self.endpoint
+		data[Config.KEY_CLUSTER_NAME] = self.cluster_name
 		data[Config.KEY_HOSTNAME] = socket.gethostname()
+		data[Config.KEY_ENDPOINT] = self.endpoint
 		data[Config.KEY_SYS_NAME] = psi.arch.arch_type().sysname
 		data[Config.KEY_RELEASE] = psi.arch.arch_type().release
-		data[Config.KEY_CLUSTER_NAME] = self.cluster_name
 		# check if the data is dirty
 		if data_dict[self.name] != data:
 			data_dict[self.name] = data
