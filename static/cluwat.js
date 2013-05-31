@@ -60,31 +60,32 @@ function getStringSideNodeRow( side_node_id, node_name )
 
 function fillInNodeData(main_node_row, node_data)
 {
-    var title_row = "<tr>";
-    var content_row = "<tr>";
-    for( var key in node_data.NODE )
-    {
-        title_row += "<td>" + key + "</td>";
-		content_row += "<td>" + node_data.NODE[key] + "</td>";
-    }
-    title_row += "</tr>";
-    content_row += "</tr>";
-    $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
+    // var title_row = "<tr>";
+    // var content_row = "<tr>";
+    // for( var key in node_data.NODE )
+    // {
+    //     title_row += "<td>" + key + "</td>";
+    //     content_row += "<td>" + node_data.NODE[key] + "</td>";
+    // }
+    // title_row += "</tr>";
+    // content_row += "</tr>";
+    // $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
 
-    //$(main_node_row).append(CreateTableView([node_data.NODE], "lightPro", true)).fadeIn();
-    title_row = "<tr><td>PID</td><td>PPID</td><td>Command</td></tr>";
-    content_row = "";
-    for( var i in node_data.PROCESSES )
-    {
-        content_row += "<tr>"
-        for( var key in node_data.PROCESSES[i])
-        {
-            content_row += "<td>" + node_data.PROCESSES[i][key] + "</td>";
-        }
-        content_row += "</tr>"
-        //main_node_row).append(CreateTableView([node_data.PROCESSES[proc]], "lightPro", true)).fadeIn();
-    }
-    $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
+    // //$(main_node_row).append(CreateTableView([node_data.NODE], "lightPro", true)).fadeIn();
+    // title_row = "<tr><td>PID</td><td>PPID</td><td>Command</td></tr>";
+    // content_row = "";
+    // for( var i in node_data.PROCESSES )
+    // {
+    //     content_row += "<tr>"
+    //     for( var key in node_data.PROCESSES[i])
+    //     {
+    //         content_row += "<td>" + node_data.PROCESSES[i][key] + "</td>";
+    //     }
+    //     content_row += "</tr>"
+    //     //main_node_row).append(CreateTableView([node_data.PROCESSES[proc]], "lightPro", true)).fadeIn();
+    // }
+    // $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
+    $(main_node_row).append(CreateTableView([node_data.NODE], "customers", true)).fadeIn();
     $(main_node_row).append(CreateTableView(node_data.PROCESSES, "lightPro", true)).fadeIn();
 }
 
@@ -134,7 +135,7 @@ function drawSidePanel(cluster_data)
             }
             else
             {
-                $("#main_panel").append( "<tr id=\"" + main_node_id + "\"></tr></table>" );
+                $(main_cluster_table).append( "<tr id=\"" + main_node_id + "\"></tr>" );
             }
             fillInNodeData(main_node_row, cluster_data[key]);
         }
@@ -163,7 +164,7 @@ function drawMainTable(cluster_data)
 {
     cluster_data = JSON.parse(cluster_data)
     // show debug text
-    $("#cluster_txt").html("<pre><code>" + FormatJSON(cluster_data) + "</code></pre>");
+    $("#cluster_txt").html("<hr><pre><code>" + FormatJSON(cluster_data) + "</code></pre>");
 
     // display received json data
     drawSidePanel(cluster_data);

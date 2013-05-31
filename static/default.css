@@ -1,4 +1,7 @@
-﻿.lightPro { padding: 0; margin: 10px auto; border-collapse: collapse; border: 1px solid #333; font-family: "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif; font-size: 1em; color: #000; width: 100%; empty-cells: show; background-color: #fff; }
+﻿/*
+ * table style lightPro
+ * */
+.lightPro { padding: 0; margin: 10px auto; border-collapse: collapse; border: 1px solid #333; font-family: "Trebuchet MS" , Verdana, Arial, Helvetica, sans-serif; font-size: 1em; color: #000; width: 100%; empty-cells: show; background-color: #fff; }
 .lightPro caption { caption-side: top; font-size: 0.9em; font-style: italic; text-align: right; padding: 0.5em 0; }
 .lightPro th, .lightPro td { border: 1px dotted #666; padding: 0.1em 0.3em; text-align: left; color: #055f81; }
 .lightPro th[scope=col] { color: #fff; background-color: #582E00; text-transform: uppercase; font-size: 1.1em; border-bottom: 1px dotted #FFF; border-right: 1px dotted #FFF; padding-left: 6px; }
@@ -17,6 +20,36 @@
 
 #DynamicGridLoading { width: 160px; margin: 0 auto; padding: 0; background-color: #fff; text-align: center; border: solid 1px #000; }
 #DynamicGridLoading img { margin: 20 auto; vertical-align: middle; }
+
+/*
+ * table style customer
+ * */
+.customers
+{
+	font-family:"Trebuchet MS", Arial, Helvetica, sans-serif;
+	width:100%;
+	border-collapse:collapse;
+}
+.customers td, .customers th
+{
+	font-size:1em;
+	border:1px solid #98bf21;
+	padding:3px 7px 2px 7px;
+}
+.customers th
+{
+	font-size:1.1em;
+	text-align:left;
+	padding-top:5px;
+	padding-bottom:4px;
+	background-color:#A7C942;
+	color:#ffffff;
+}
+.customers tr.alt td
+{
+	color:#000000;
+	background-color:#EAF2D3;
+}
 
 /*
  * Copyright 2009 FriendFeed
