@@ -62,7 +62,10 @@ class NodeProcsData(NodeData):
 		for process in process_table.values():
 			for proc_name in self.monitored_proc_names:
 				if proc_name in process.command:
-					data.append( { Config.KEY_PID : process.pid, Config.KEY_PPID : process.ppid, Config.KEY_COMMAND : process.command } )
+					data.append( { Config.KEY_PID : process.pid,
+									Config.KEY_PPID : process.ppid,
+									Config.KEY_COMMAND : process.command,
+									Config.KEY_START_TIME : process.start_time.datetime().strftime("%Y-%m-%d %H:%M:%S") } )
 		if data_dict[self.name] != data:
 			data_dict[self.name] = data
 			NodeData.dirty = True

@@ -113,7 +113,7 @@ function drawSidePanel(cluster_data)
         else
         {
             // create cluster table
-            var text = "<hr><table id=\"" + side_cluster_table_id + "\">" +
+            var text = "<hr><table id=\"" + side_cluster_table_id + "\" class=\"customers\">" +
                        "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align=\"center\">" + cluster_name + "</td></tr>" +
                        "<tr><td align=\"center\">status</td><td align=\"center\">node name</td></tr></table>";
             $("#side_panel").append( text );

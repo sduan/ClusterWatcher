@@ -23,6 +23,7 @@ class Config(object):
 	KEY_COMMAND = "command"
 	KEY_NAME = "name"
 	KEY_CLUSTER_NAME = "cluster_name"
+	KEY_START_TIME = "start time"
 
 	def __init__(self):
 		pass
