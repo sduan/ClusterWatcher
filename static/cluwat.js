@@ -53,9 +53,17 @@ jQuery.fn.formToDict = function() {
     return json;
 };
 
+function showNode(checkbox)
+{
+	alert(checkbox.name);
+	$("#main_cluster_cluster_test_1").toggle(checkbox.checked);
+}
+
 function getStringSideNodeRow( side_node_id, node_name )
 {
-	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_PIC + "<td align=\"center\">" + node_name + "</td></tr>";
+	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_PIC +
+		   "<td align=\"center\"><input type='checkbox' checked onclick='showNode(this)' name='"+ node_name + "'/></td>" +
+		   "<td align=\"center\">" + node_name + "</td></tr>";
 }
 
 function fillInNodeData(main_node_row, node_data)
@@ -114,8 +122,8 @@ function drawSidePanel(cluster_data)
         {
             // create cluster table
             var text = "<hr><table id=\"" + side_cluster_table_id + "\" class=\"customers\">" +
-                       "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align=\"center\">" + cluster_name + "</td></tr>" +
-                       "<tr><td align=\"center\">status</td><td align=\"center\">node name</td></tr></table>";
+                       "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align='center' colspan='2'>" + cluster_name + "</td></tr>" +
+                       "<tr><td width='10%' align=\"center\">status</td><td width='10%' align=\"center\">show</td><td align=\"center\">node name</td></tr></table>";
             $("#side_panel").append( text );
             $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name ) );
         }
