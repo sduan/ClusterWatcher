@@ -56,13 +56,13 @@ jQuery.fn.formToDict = function() {
 function showNode(checkbox)
 {
 	alert(checkbox.name);
-	$("#main_cluster_cluster_test_1").toggle(checkbox.checked);
+	$(checkbox.name).toggle(checkbox.checked);
 }
 
-function getStringSideNodeRow( side_node_id, node_name )
+function getStringSideNodeRow( side_node_id, node_name, node_id )
 {
 	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_PIC +
-		   "<td align=\"center\"><input type='checkbox' checked onclick='showNode(this)' name='"+ node_name + "'/></td>" +
+		   "<td align=\"center\"><input type='checkbox' checked onclick='showNode(this)' name='"+ node_id + "'/></td>" +
 		   "<td align=\"center\">" + node_name + "</td></tr>";
 }
 
@@ -110,12 +110,19 @@ function drawSidePanel(cluster_data)
         var node_name = cluster_data[key].NODE.hostname;
         var side_node_id = SIDE_NODE_PREFIX + cluster_name + "_" + key.replace(/\./g, '_');
         var side_node_row = "#" + side_node_id;
+
+        // main panel
+        var main_cluster_table_id = MAIN_CLUSTER_PREFIX + cluster_name;
+        var main_cluster_table = "#" + main_cluster_table_id;
+        var main_node_id = MAIN_NODE_PREFIX + cluster_name + "_" + key.replace(/\./g, '_');
+        var main_node_row = "#" + main_node_id;
+
         if( $(side_cluster_table).length )
         {
             // cluster table already exist
             if(!$(side_node_row).length)
             {
-                $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name ) );
+                $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name, main_node_row ) );
             }
         }
         else
@@ -125,16 +132,10 @@ function drawSidePanel(cluster_data)
                        "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align='center' colspan='2'>" + cluster_name + "</td></tr>" +
                        "<tr><td width='10%' align=\"center\">status</td><td width='10%' align=\"center\">show</td><td align=\"center\">node name</td></tr></table>";
             $("#side_panel").append( text );
-            $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name ) );
+            $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name, main_node_row ) );
         }
 
-        // main panel
-        var main_cluster_table_id = MAIN_CLUSTER_PREFIX + cluster_name;
-        var main_cluster_table = "#" + main_cluster_table_id;
-
-        var main_node_id = MAIN_NODE_PREFIX + cluster_name + "_" + key.replace(/\./g, '_');
-        var main_node_row = "#" + main_node_id;
-        if( $(main_cluster_table).length )
+       if( $(main_cluster_table).length )
         {
             // cluster table already exist
             if($(main_node_row).length)
