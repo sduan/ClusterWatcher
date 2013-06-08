@@ -16,7 +16,7 @@ var GREEN_PIC = '<img alt="Success" class="icon32x32" src="/static/images/green.
 var TD_GREEN_PIC = '<td align=\"center\">' + GREEN_PIC + '</td>';
 var CLUSTER_PIC = '<img alt="Cluster" class="icon32x32" src="/static/images/cluster_32.jpg" tooltip="cluster">';
 var TD_CLUSTER_PIC = '<td align=\"center\">' + CLUSTER_PIC + '</td>';
-var GREEN_NODE_PIC = '<img alt="Node Connected" class="icon32x32" src="/static/images/cluster_32.jpg" tooltip="node connected">';
+var GREEN_NODE_PIC = '<img alt="Node Connected" class="icon32x32" src="/static/images/node_green_32.jpg" tooltip="node connected">';
 var TD_GREEN_NODE_PIC = '<td align=\"center\">' + GREEN_NODE_PIC + '</td>';
 var SIDE_CLUSTER_PREFIX = "side_cluster_"
 var SIDE_NODE_PREFIX = "side_node_"
