@@ -14,6 +14,10 @@
 
 var GREEN_PIC = '<img alt="Success" class="icon32x32" src="/static/images/green.png" tooltip="connected">';
 var TD_GREEN_PIC = '<td align=\"center\">' + GREEN_PIC + '</td>';
+var CLUSTER_PIC = '<img alt="Cluster" class="icon32x32" src="/static/images/cluster_32.jpg" tooltip="cluster">';
+var TD_CLUSTER_PIC = '<td align=\"center\">' + CLUSTER_PIC + '</td>';
+var GREEN_NODE_PIC = '<img alt="Node Connected" class="icon32x32" src="/static/images/cluster_32.jpg" tooltip="node connected">';
+var TD_GREEN_NODE_PIC = '<td align=\"center\">' + GREEN_NODE_PIC + '</td>';
 var SIDE_CLUSTER_PREFIX = "side_cluster_"
 var SIDE_NODE_PREFIX = "side_node_"
 var MAIN_CLUSTER_PREFIX = "main_cluster_"
@@ -49,7 +53,7 @@ function showNode(checkbox)
 
 function getStringSideNodeRow( side_node_id, node_name, node_id )
 {
-	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_PIC +
+	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_NODE_PIC +
 		   "<td align=\"center\"><input type='checkbox' checked onclick='showNode(this)' name='"+ node_id + "'/></td>" +
 		   "<td align=\"center\">" + node_name + "</td></tr>";
 }
@@ -117,8 +121,8 @@ function drawSidePanel(cluster_data)
         {
             // create cluster table
             var text = "<hr><table id=\"" + side_cluster_table_id + "\" class=\"customers\">" +
-                       "<tr><td width=\"10%\" align=\"center\">cluster:</td><td align='center' colspan='2'>" + cluster_name + "</td></tr>" +
-                       "<tr><td width='10%' align=\"center\">status</td><td width='10%' align=\"center\">show</td><td align=\"center\">node name</td></tr></table>";
+                       "<tr>" + TD_CLUSTER_PIC + "<td align='center' colspan='2'>" + cluster_name + "</td></tr>";
+                       //"<tr><td width='10%' align=\"center\">status</td><td width='10%' align=\"center\">show</td><td align=\"center\">node name</td></tr></table>";
             $("#side_panel").append( text );
             $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name, main_node_row ) );
         }
