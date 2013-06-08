@@ -23,17 +23,6 @@ $(document).ready(function() {
     if (!window.console) window.console = {};
     if (!window.console.log) window.console.log = function() {};
 
-    $("#messageform").live("submit", function() {
-        newMessage($(this));
-        return false;
-    });
-    $("#messageform").live("keypress", function(e) {
-        if (e.keyCode == 13) {
-            newMessage($(this));
-            return false;
-        }
-    });
-    $("#message").select();
     updater.start();
 });
 
@@ -55,8 +44,7 @@ jQuery.fn.formToDict = function() {
 
 function showNode(checkbox)
 {
-	alert(checkbox.name);
-	$(checkbox.name).toggle(checkbox.checked);
+	$(checkbox.name).fadeToggle("slow");
 }
 
 function getStringSideNodeRow( side_node_id, node_name, node_id )
@@ -172,6 +160,11 @@ function drawMainPanel(cluster_data)
 function drawMainTable(cluster_data)
 {
     cluster_data = JSON.parse(cluster_data)
+    if( jQuery.isEmptyObject(cluster_data) )
+    {
+        $("#cluster_txt").html("<h3>There is no cluster to watch!</h3>");
+        return;
+    }
     // show debug text
     $("#cluster_txt").html("<hr><pre><code>" + FormatJSON(cluster_data) + "</code></pre>");
 
