@@ -46,6 +46,11 @@ jQuery.fn.formToDict = function() {
     return json;
 };
 
+function textOverHr(text)
+{
+    return '<table class="text_over_hr"><tr><td><hr></td><td class="text_cell">' + text + '</td><td><hr></td></tr></table>';
+}
+
 function showNode(checkbox)
 {
 	$(checkbox.name).fadeToggle("slow");
@@ -55,7 +60,7 @@ function getStringSideNodeRow( side_node_id, node_name, node_id )
 {
 	return "<tr id=\"" + side_node_id + "\">" + TD_GREEN_NODE_PIC +
 		   "<td align=\"center\"><input type='checkbox' checked onclick='showNode(this)' name='"+ node_id + "'/></td>" +
-		   "<td align=\"center\">" + node_name + "</td></tr>";
+		   "<td align=\"center\"> <a href='" + node_id + "'>" + node_name + "</a></td></tr>";
 }
 
 function fillInNodeData(main_node_row, node_data)
@@ -85,6 +90,7 @@ function fillInNodeData(main_node_row, node_data)
     //     //main_node_row).append(CreateTableView([node_data.PROCESSES[proc]], "lightPro", true)).fadeIn();
     // }
     // $(main_node_row).append( "<table width=\"100%\">" + title_row + content_row + "</table>" );
+    $(main_node_row).append(textOverHr(node_data.NODE.cluster_name + " :: " + node_data.NODE.hostname));
     $(main_node_row).append(CreateTableView([node_data.NODE], "customers", true)).fadeIn();
     $(main_node_row).append(CreateTableView(node_data.PROCESSES, "lightPro", true)).fadeIn();
 }
@@ -120,8 +126,8 @@ function drawSidePanel(cluster_data)
         else
         {
             // create cluster table
-            var text = "<hr><table id=\"" + side_cluster_table_id + "\" class=\"customers\">" +
-                       "<tr>" + TD_CLUSTER_PIC + "<td align='center' colspan='2'>" + cluster_name + "</td></tr>";
+            var text = "<hr><table id=\"" + side_cluster_table_id + "\" class=\"side_cluster\" cellspacing=\"0\" cellpadding=\"0\">" +
+                       "<tr>" + TD_CLUSTER_PIC + "<td class='cluster_name' align='center' colspan='2'> <a href='#" + MAIN_CLUSTER_PREFIX + cluster_name + "'>" + cluster_name + "</a></td></tr>";
                        //"<tr><td width='10%' align=\"center\">status</td><td width='10%' align=\"center\">show</td><td align=\"center\">node name</td></tr></table>";
             $("#side_panel").append( text );
             $(side_cluster_table).append( getStringSideNodeRow( side_node_id, node_name, main_node_row ) );
@@ -143,7 +149,7 @@ function drawSidePanel(cluster_data)
         else
         {
             // create cluster table
-            var text = "<hr><table width=\"100%\" id=\"" + main_cluster_table_id + "\">" +
+            var text = "<table width=\"100%\" id=\"" + main_cluster_table_id + "\">" +
                        "<tr id=\"" + main_node_id + "\"></tr></table>";
             $("#main_panel").append( text );
             fillInNodeData(main_node_row, cluster_data[key]);
