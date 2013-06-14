@@ -46,12 +46,15 @@ def OnRecvNodeInfo( msg ):
 	stream.send( "ok" )
 	ChatSocketHandler.send_message(json.dumps(node_info_data))
 
-
+def OnStreamClose():
+	logging.info("Stream closed!!!")
+	print "Node connection closed!"
 
 c = zmq.Context()
 s = c.socket(zmq.REP)
 s.bind('tcp://*:10001')
 stream = zmqstream.ZMQStream(s)
+stream.set_close_callback( OnStreamClose )
 stream.on_recv( OnRecvNodeInfo )
 
 # while True:

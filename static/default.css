@@ -104,6 +104,14 @@
 }
 
 /*
+ * table style main_cluster
+ * */
+.main_cluster
+{
+	width:100%;
+}
+
+/*
  * Copyright 2009 FriendFeed
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may
